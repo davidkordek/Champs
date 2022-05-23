@@ -18,74 +18,49 @@ let champs = ["Aatrox","Ahri","Akali","Akshan","Alistar","Amumu","Anivia","Annie
 //container for all the divs
 let container = document.querySelector('.container');
 
-let button = document.querySelector('button');
-function genDivs(v,x,y){
 
-    var e = document.querySelector('.grid'); // whatever you want to append the rows to: 
-    for(var i = 0; i < v*3; i++){ 
-        var row = document.createElement("div"); 
-        row.className = "row";
-        row.style = `margin: 0; `;
-        for(var j = 1; j <= v; j++){ 
-            var cell = document.createElement("div"); 
-            cell.className = "gridsquare"; 
-            cell.style = `
-            height: ${y}px;
-            width: ${x}px;
-            `;
-            cell.addEventListener("click", (e) => {
-                e.target.style.background = 'blue';
-
-            });
-            var champName = document.createElement("p");
-            champName.className = "champName";
-            champName.textContent = champs[(i * v) + j-1];
-
-            var image = document.createElement('img');
-            image.style.width = "60px";
-            image.style.height = "auto";    
-            image.src = `pics/${champs[(i * v) + j-1]}Square.png`;
-            if(champs[(i * v) + j-1]){
-                cell.appendChild(champName);
-                cell.appendChild(image);
-                row.appendChild(cell); 
-                
-            }
-            
-} 
-      e.appendChild(row); 
-    } 
-
-}
-
-const champSearch = (champ,divs,ps,displayType) => {
-    for(var i = 0; i < ps.length; i++){
-        let x = ps[i].textContent.toLowerCase();
-        if(!(x === champ)){
-            ps[i].style.display = displayType;
-            divs[i].style.display = displayType;
-            
-        }
-        
-    }
-}
-
-function search(champ) {
-    var divs = document.getElementsByClassName("gridsquare");
-    var ps = document.getElementsByClassName("champName");
-   
-    if(champ === ""){
-        champSearch(champ,divs,ps,"inline-block")
-        return;
-    }
-    champSearch(champ,divs,ps,"none");
-
+function generateChampList() {
+    var grid = document.querySelector('.grid');
     
+    champs.forEach(champ => {
+        var card = document.createElement('div');
+        var image = document.createElement('img');
+        var champName = document.createElement("p");
+
+        card.className = "gridsquare";
+        champName.className = "champName";
+        champName.textContent = champ;
+
+        image.style.width = "70px";
+        image.style.height = "auto";    
+        image.src = `pics/${champ}Square.png`;
+
+        //add the components to the card
+        card.appendChild(champName);
+        card.appendChild(image);
+        //add card to the grid container
+        grid.appendChild(card);
+    });
+
 }
-searchBtn = document.querySelector('.search');
-searchBtn.addEventListener('click',() => {
-    let input = prompt("Enter Champ Name");
-    search(input);
+
+searchInput = document.querySelector('input');
+
+searchInput.addEventListener("input", (e) => {
+    const value = e.target.value.toLowerCase();
+    let champNames = document.getElementsByClassName("champName");
+    var divs = document.getElementsByClassName("gridsquare");
+
+    for(var i = 0; i < champNames.length; i++){
+        let name = champNames[i].textContent.toLowerCase();
+        const isVisible = name.includes(value);
+        if(divs[i].classList.toggle("hide",!isVisible)){
+            divs[i].style.display = "none";
+        }else{''
+            divs[i].style.display = "inline-block";
+        }
+    
+    }
 });
-genDivs(8,60,80);
-search("");
+
+generateChampList();
