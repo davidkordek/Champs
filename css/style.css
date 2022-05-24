@@ -3,14 +3,43 @@ body {
     padding: 0;
     background-color:#31313C;
 }
-.container{
-
+.container,.letters{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 label {
     color: #f8ffde;
 }
 
+h1 {
+    display: flex;
+    justify-content: center;
+    color: #f8ffde;
+}
+
+.abilities {
+    display: flex;
+    justify-content: center;
+}
+.ability {
+    border: .4rem solid black;
+    border-radius: .5rem;
+    margin: 1rem;
+    font-size: 1.5rem;
+    transition: all .07s ease;
+}
+
+.text {
+    color: #f8ffde;
+    align-self: center;
+}
+.playing {
+    transform: scale(1.1);
+    border-color: #ffc600;
+    box-shadow: 0 0 1rem #ffc600;
+}
 
 .champName {
     font-size:13px;
@@ -19,6 +48,10 @@ label {
     left:2px;
     margin:0;
     color:white;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
 }
 
 .gridsquare {
